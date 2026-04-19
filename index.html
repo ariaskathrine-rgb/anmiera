@@ -9,7 +9,7 @@
 
 <style>
 
-/* BODY */
+/* GLOBAL */
 body {
     margin: 0;
     background: #0a0a0a;
@@ -17,30 +17,31 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* NAV */
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 18px 40px;
     border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    background: #0a0a0a;
+    z-index: 10;
 }
 
 .nav img {
     height: 45px;
 }
 
-.cart-btn {
-    border: 1px solid gold;
-    padding: 8px 15px;
-    color: gold;
-    cursor: pointer;
-}
-
-/* 🔥 FIXED SMALLER SLIDER */
-.slider {
+/* HERO (CLEAN & BALANCED) */
+.hero {
+    height: 60vh;
     position: relative;
-    height: 65vh;   /* smaller now */
     overflow: hidden;
 }
 
@@ -62,7 +63,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.65);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,35 +73,39 @@ body {
 
 .overlay h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 45px;
+    font-size: 42px;
     letter-spacing: 4px;
 }
 
-/* SECTION */
+/* SECTION SYSTEM */
 .section {
-    padding: 70px 40px;
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: auto;
     text-align: center;
 }
 
 .section h2 {
     font-family: 'Playfair Display', serif;
+    font-size: 30px;
     margin-bottom: 10px;
 }
 
 .section p {
     color: #aaa;
+    margin-bottom: 40px;
 }
 
-/* PRODUCTS */
+/* SCENT GRID (IMPORTANT FIX) */
 .products {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
-    justify-content: center;
 }
 
+/* CARD */
 .card {
-    width: 240px;
+    background: #111;
     border: 1px solid #222;
     padding: 15px;
     transition: 0.3s;
@@ -123,16 +128,17 @@ body {
 
 .price {
     color: gold;
-    margin-top: 5px;
+    margin: 8px 0;
 }
 
-/* BUTTONS */
+/* BUTTON */
 button {
+    width: 100%;
     margin-top: 10px;
     background: transparent;
     border: 1px solid gold;
     color: gold;
-    padding: 8px 12px;
+    padding: 10px;
     cursor: pointer;
 }
 
@@ -144,9 +150,9 @@ button:hover {
 /* CART */
 .cart {
     position: fixed;
-    right: -320px;
+    right: -340px;
     top: 0;
-    width: 300px;
+    width: 320px;
     height: 100%;
     background: #111;
     padding: 20px;
@@ -158,14 +164,11 @@ button:hover {
     right: 0;
 }
 
-.checkout a {
-    display: block;
-    margin-top: 10px;
-    padding: 10px;
+.cart-btn {
     border: 1px solid gold;
+    padding: 8px 14px;
     color: gold;
-    text-decoration: none;
-    text-align: center;
+    cursor: pointer;
 }
 
 /* FOOTER */
@@ -184,11 +187,13 @@ button:hover {
 <!-- NAV -->
 <div class="nav">
     <img src="logo.png">
-    <div class="cart-btn" onclick="toggleCart()">Cart 🛒 (<span id="count">0</span>)</div>
+    <div class="cart-btn" onclick="toggleCart()">
+        Cart 🛒 (<span id="count">0</span>)
+    </div>
 </div>
 
-<!-- SMALL HERO SLIDER -->
-<div class="slider">
+<!-- HERO (CLEAN + SMALL + PREMIUM) -->
+<div class="hero">
 
     <div class="slide active" style="background-image:url('hero.jpg')">
         <div class="overlay">
@@ -214,8 +219,8 @@ button:hover {
 
 </div>
 
-<!-- SCENTS -->
-<div class="section">
+<!-- SCENTS (NOW PROPERLY VISIBLE) -->
+<div class="section" id="shop">
     <h2>Available Scents</h2>
     <p>Explore our signature inspired fragrance collection</p>
 
@@ -224,7 +229,6 @@ button:hover {
         <div class="card">
             <img src="bottle.jpg">
             <h3>Anmiera Signature</h3>
-            <p>Luxury everyday scent</p>
             <div class="price">₱299 | 50mL</div>
             <button onclick="buyNow('Anmiera Signature')">Buy Now</button>
         </div>
@@ -237,15 +241,27 @@ button:hover {
     <h3>Your Cart</h3>
     <div id="cartItems"></div>
 
-    <div class="checkout">
+    <a href="#" onclick="checkoutCart()" style="
+        display:block;
+        margin-top:15px;
+        padding:10px;
+        border:1px solid gold;
+        color:gold;
+        text-align:center;
+        text-decoration:none;">
+        Checkout via WhatsApp
+    </a>
 
-        <a href="#" onclick="checkoutCart()">Checkout via WhatsApp</a>
-
-        <a href="https://www.facebook.com/anmieraperfume/" target="_blank">
-            Order via Facebook
-        </a>
-
-    </div>
+    <a href="https://www.facebook.com/anmieraperfume/" target="_blank" style="
+        display:block;
+        margin-top:10px;
+        padding:10px;
+        border:1px solid gold;
+        color:gold;
+        text-align:center;
+        text-decoration:none;">
+        Order via Facebook
+    </a>
 </div>
 
 <!-- FOOTER -->
@@ -269,6 +285,10 @@ function buyNow(product) {
     window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(message), "_blank");
 }
 
+function toggleCart() {
+    document.getElementById("cart").classList.toggle("open");
+}
+
 function addToCart(item) {
     cart.push(item);
     document.getElementById("count").innerText = cart.length;
@@ -287,10 +307,6 @@ function checkoutCart() {
     });
 
     window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(message), "_blank");
-}
-
-function toggleCart() {
-    document.getElementById("cart").classList.toggle("open");
 }
 
 /* SLIDER */
