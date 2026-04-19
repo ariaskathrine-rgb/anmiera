@@ -9,7 +9,6 @@
 
 <style>
 
-/* GLOBAL */
 body {
     margin: 0;
     background: #0a0a0a;
@@ -22,7 +21,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 15px 25px;
     border-bottom: 1px solid #222;
     position: sticky;
     top: 0;
@@ -34,14 +33,16 @@ body {
     height: 45px;
 }
 
-.cart-btn {
+.cart-btn, .fb-btn {
     border: 1px solid gold;
     padding: 8px 12px;
     color: gold;
     cursor: pointer;
+    margin-left: 10px;
+    text-decoration: none;
 }
 
-/* HERO SLIDER (WORKING) */
+/* HERO */
 .hero {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -56,7 +57,7 @@ body {
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: 1s;
 }
 
 .slide.active {
@@ -80,17 +81,12 @@ body {
     font-size: 40px;
 }
 
-/* SECTION */
+/* PRODUCTS */
 .section {
     padding: 50px 20px;
     text-align: center;
 }
 
-.section h2 {
-    font-family: 'Playfair Display', serif;
-}
-
-/* GRID */
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -99,7 +95,6 @@ body {
     margin: auto;
 }
 
-/* CARD */
 .card {
     background: #111;
     border: 1px solid #222;
@@ -123,7 +118,6 @@ body {
     margin: 8px 0;
 }
 
-/* BUTTON */
 button {
     width: 100%;
     padding: 10px;
@@ -154,9 +148,35 @@ button:hover {
     right: 0;
 }
 
-/* FOOTER */
+/* CHAT */
+#chatButton {
+position:fixed;
+bottom:20px;
+right:20px;
+background:gold;
+color:black;
+padding:12px 14px;
+border-radius:50px;
+cursor:pointer;
+z-index:999;
+font-weight:bold;
+}
+
+#chatBox {
+display:none;
+position:fixed;
+bottom:80px;
+right:20px;
+width:280px;
+background:#111;
+border:1px solid #333;
+border-radius:12px;
+padding:15px;
+z-index:999;
+}
+
 .footer {
-    padding: 30px;
+    padding: 25px;
     text-align: center;
     color: #777;
     border-top: 1px solid #222;
@@ -170,7 +190,11 @@ button:hover {
 <!-- NAV -->
 <div class="nav">
     <img src="logo.png">
-    <div class="cart-btn" onclick="toggleCart()">Cart 🛒</div>
+
+    <div>
+        <span class="cart-btn" onclick="toggleCart()">Cart 🛒 (<span id="count">0</span>)</span>
+        <a class="fb-btn" href="https://www.facebook.com/anmieraperfume/" target="_blank">Facebook</a>
+    </div>
 </div>
 
 <!-- HERO -->
@@ -180,7 +204,7 @@ button:hover {
         <div class="overlay">
             <img src="logo.png" style="height:70px;">
             <h1>ANMIERA</h1>
-            <p>Luxury Inspired Fragrance</p>
+            <p>Luxury Inspired Perfume</p>
         </div>
     </div>
 
@@ -189,73 +213,100 @@ button:hover {
 
 </div>
 
-<!-- SCENTS -->
+<!-- PRODUCTS -->
 <div class="section">
-    <h2>Available Scents</h2>
-    <p>₱299 | 50mL | Inspired Luxury Collection</p>
+<h2>Available Scents</h2>
+<p>₱299 | 50mL</p>
 
-    <div class="products">
+<div class="products">
 
-        <div class="card"><img src="bottle.jpg"><h3>Happy Bloom</h3><p>Clinique Happy Inspired</p><div class="price">₱299</div><button onclick="buyNow('Happy Bloom')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Happy Bloom</h3><p>Clinique Happy</p><div class="price">₱299</div><button onclick="buyNow('Happy Bloom')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Libre Muse</h3><p>YSL Libre Inspired</p><div class="price">₱299</div><button onclick="buyNow('Libre Muse')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Libre Muse</h3><p>YSL Libre</p><div class="price">₱299</div><button onclick="buyNow('Libre Muse')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Valaya Essence</h3><p>Valaya Inspired</p><div class="price">₱299</div><button onclick="buyNow('Valaya Essence')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Valaya Essence</h3><p>Valaya Inspired</p><div class="price">₱299</div><button onclick="buyNow('Valaya Essence')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Cloud Touch</h3><p>Ariana Grande Cloud</p><div class="price">₱299</div><button onclick="buyNow('Cloud Touch')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Cloud Touch</h3><p>Ariana Cloud</p><div class="price">₱299</div><button onclick="buyNow('Cloud Touch')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Meow Bliss</h3><p>Katy Perry Meow</p><div class="price">₱299</div><button onclick="buyNow('Meow Bliss')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Meow Bliss</h3><p>Katy Perry Meow</p><div class="price">₱299</div><button onclick="buyNow('Meow Bliss')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Rouge Aura</h3><p>Baccarat Rouge 540</p><div class="price">₱299</div><button onclick="buyNow('Rouge Aura')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Rouge Aura</h3><p>Baccarat Rouge</p><div class="price">₱299</div><button onclick="buyNow('Rouge Aura')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Coco Elegance</h3><p>Chanel Inspired</p><div class="price">₱299</div><button onclick="buyNow('Coco Elegance')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Coco Elegance</h3><p>Chanel Inspired</p><div class="price">₱299</div><button onclick="buyNow('Coco Elegance')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Good Girl Noir</h3><p>Carolina Herrera</p><div class="price">₱299</div><button onclick="buyNow('Good Girl Noir')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Good Girl Noir</h3><p>Carolina Herrera</p><div class="price">₱299</div><button onclick="buyNow('Good Girl Noir')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Lacoste Black</h3><p>Masculine Fresh</p><div class="price">₱299</div><button onclick="buyNow('Lacoste Black')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Lacoste Black</h3><p>Masculine Fresh</p><div class="price">₱299</div><button onclick="buyNow('Lacoste Black')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Lacoste White</h3><p>Clean Fresh</p><div class="price">₱299</div><button onclick="buyNow('Lacoste White')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Lacoste White</h3><p>Clean Fresh</p><div class="price">₱299</div><button onclick="buyNow('Lacoste White')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Lacoste Red</h3><p>Energetic Scent</p><div class="price">₱299</div><button onclick="buyNow('Lacoste Red')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Lacoste Red</h3><p>Energetic</p><div class="price">₱299</div><button onclick="buyNow('Lacoste Red')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Dylan Purple</h3><p>Versace Inspired</p><div class="price">₱299</div><button onclick="buyNow('Dylan Purple')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Dylan Purple</h3><p>Versace</p><div class="price">₱299</div><button onclick="buyNow('Dylan Purple')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Pear Essence</h3><p>Jo Malone Inspired</p><div class="price">₱299</div><button onclick="buyNow('Pear Essence')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Pear Essence</h3><p>Jo Malone</p><div class="price">₱299</div><button onclick="buyNow('Pear Essence')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Polo Sport Fresh</h3><p>Ralph Lauren Inspired</p><div class="price">₱299</div><button onclick="buyNow('Polo Sport Fresh')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Polo Sport</h3><p>Ralph Lauren</p><div class="price">₱299</div><button onclick="buyNow('Polo Sport')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Eros Flame</h3><p>Versace Eros</p><div class="price">₱299</div><button onclick="buyNow('Eros Flame')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Eros Flame</h3><p>Versace Eros</p><div class="price">₱299</div><button onclick="buyNow('Eros Flame')">Buy</button></div>
 
-        <div class="card"><img src="bottle.jpg"><h3>Amethyste Glow</h3><p>Bvlgari Inspired</p><div class="price">₱299</div><button onclick="buyNow('Amethyste Glow')">Buy Now</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Amethyste Glow</h3><p>Bvlgari</p><div class="price">₱299</div><button onclick="buyNow('Amethyste Glow')">Buy</button></div>
 
-    </div>
+</div>
+</div>
+
+<!-- CART -->
+<div class="cart" id="cart">
+<h3>Your Cart</h3>
+<div id="cartItems"></div>
+</div>
+
+<!-- CHAT -->
+<div id="chatButton" onclick="toggleChat()">💬 Chat Me</div>
+
+<div id="chatBox">
+<h3>Anmiera Support</h3>
+<button onclick="buyNow('I want to order')">🧴 Order Now</button>
+<button onclick="window.open('https://www.facebook.com/anmieraperfume/')">📘 Facebook</button>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-    © 2026 Anmiera Perfume
+© 2026 Anmiera Perfume
 </div>
 
 <script>
 
-let slides = document.querySelectorAll(".slide");
-let i = 0;
-
-setInterval(() => {
-    slides.forEach(s => s.classList.remove("active"));
-    slides[i].classList.add("active");
-    i = (i + 1) % slides.length;
-}, 4000);
+let cart = [];
 
 function buyNow(product){
-    let phone = "639952525228";
-    let msg = `Hi! I want to order:\n🧴 ${product}\n💰 ₱299\n📦 50mL`;
-    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg));
+cart.push(product);
+document.getElementById("count").innerText = cart.length;
+
+let phone = "639952525228";
+let msg = `Hi! I want to order:\n${product}\n₱299`;
+
+window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
 
 function toggleCart(){
-    document.querySelector(".cart").classList.toggle("open");
+document.getElementById("cart").classList.toggle("open");
 }
+
+function toggleChat(){
+let box = document.getElementById("chatBox");
+box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+/* SLIDER */
+let slides = document.querySelectorAll(".slide");
+let i = 0;
+
+setInterval(()=>{
+slides.forEach(s=>s.classList.remove("active"));
+slides[i].classList.add("active");
+i=(i+1)%slides.length;
+},4000);
 
 </script>
 
