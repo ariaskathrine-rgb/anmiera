@@ -14,6 +14,7 @@ body {
     background: #0a0a0a;
     color: #eaeaea;
     font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
 }
 
 /* NAV */
@@ -21,7 +22,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 25px;
+    padding: 15px 20px;
     border-bottom: 1px solid #222;
     position: sticky;
     top: 0;
@@ -33,19 +34,19 @@ body {
     height: 45px;
 }
 
-.cart-btn, .fb-btn {
+.nav a, .cart-btn {
     border: 1px solid gold;
-    padding: 8px 12px;
+    padding: 8px 10px;
     color: gold;
-    cursor: pointer;
-    margin-left: 10px;
     text-decoration: none;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
-/* HERO */
+/* HERO (SMALL FIXED SIZE) */
 .hero {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: 55vh;
     position: relative;
     overflow: hidden;
 }
@@ -68,7 +69,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.65);
+    background: rgba(0,0,0,0.6);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,15 +79,16 @@ body {
 
 .overlay h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 40px;
+    font-size: 38px;
 }
 
-/* PRODUCTS */
+/* SECTION */
 .section {
     padding: 50px 20px;
     text-align: center;
 }
 
+/* PRODUCTS */
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -99,12 +101,10 @@ body {
     background: #111;
     border: 1px solid #222;
     padding: 15px;
-    transition: 0.3s;
 }
 
 .card:hover {
     border-color: gold;
-    transform: translateY(-5px);
 }
 
 .card img {
@@ -113,23 +113,14 @@ body {
     object-fit: cover;
 }
 
-.price {
-    color: gold;
-    margin: 8px 0;
-}
-
 button {
     width: 100%;
+    margin-top: 5px;
     padding: 10px;
     border: 1px solid gold;
     background: transparent;
     color: gold;
     cursor: pointer;
-}
-
-button:hover {
-    background: gold;
-    color: black;
 }
 
 /* CART */
@@ -155,11 +146,10 @@ bottom:20px;
 right:20px;
 background:gold;
 color:black;
-padding:12px 14px;
+padding:12px;
 border-radius:50px;
 cursor:pointer;
 z-index:999;
-font-weight:bold;
 }
 
 #chatBox {
@@ -167,14 +157,14 @@ display:none;
 position:fixed;
 bottom:80px;
 right:20px;
-width:280px;
+width:260px;
 background:#111;
 border:1px solid #333;
-border-radius:12px;
 padding:15px;
 z-index:999;
 }
 
+/* FOOTER */
 .footer {
     padding: 25px;
     text-align: center;
@@ -192,8 +182,10 @@ z-index:999;
     <img src="logo.png">
 
     <div>
+        <a href="#products">Products</a>
+        <a href="#about">About Me</a>
         <span class="cart-btn" onclick="toggleCart()">Cart 🛒 (<span id="count">0</span>)</span>
-        <a class="fb-btn" href="https://www.facebook.com/anmieraperfume/" target="_blank">Facebook</a>
+        <a href="https://www.facebook.com/anmieraperfume/" target="_blank">Facebook</a>
     </div>
 </div>
 
@@ -203,8 +195,8 @@ z-index:999;
     <div class="slide active" style="background-image:url('hero.jpg')">
         <div class="overlay">
             <img src="logo.png" style="height:70px;">
-            <h1>ANMIERA</h1>
-            <p>Luxury Inspired Perfume</p>
+            <h1>ANMIERA PERFUME</h1>
+            <p>Luxury Inspired Fragrance</p>
         </div>
     </div>
 
@@ -213,44 +205,53 @@ z-index:999;
 
 </div>
 
+<!-- ABOUT -->
+<div id="about" class="section">
+
+    <h2>About Anmiera</h2>
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px;max-width:900px;margin:auto;align-items:center;">
+
+        <img src="about.jpg" style="width:260px;height:260px;object-fit:cover;border:1px solid gold;">
+
+        <div style="flex:1;min-width:250px;color:#ccc;line-height:1.8;">
+            <p>
+                Anmiera Perfume is a luxury-inspired fragrance brand offering elegant scents at an affordable price.
+            </p>
+            <p>
+                Each perfume is inspired by world-class fragrances designed to give confidence and elegance.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
 <!-- PRODUCTS -->
-<div class="section">
+<div id="products" class="section">
+
 <h2>Available Scents</h2>
 <p>₱299 | 50mL</p>
 
 <div class="products">
 
-<div class="card"><img src="bottle.jpg"><h3>Happy Bloom</h3><p>Clinique Happy</p><div class="price">₱299</div><button onclick="buyNow('Happy Bloom')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Libre Muse</h3><p>YSL Libre</p><div class="price">₱299</div><button onclick="buyNow('Libre Muse')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Valaya Essence</h3><p>Valaya Inspired</p><div class="price">₱299</div><button onclick="buyNow('Valaya Essence')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Cloud Touch</h3><p>Ariana Cloud</p><div class="price">₱299</div><button onclick="buyNow('Cloud Touch')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Meow Bliss</h3><p>Katy Perry Meow</p><div class="price">₱299</div><button onclick="buyNow('Meow Bliss')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Rouge Aura</h3><p>Baccarat Rouge</p><div class="price">₱299</div><button onclick="buyNow('Rouge Aura')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Coco Elegance</h3><p>Chanel Inspired</p><div class="price">₱299</div><button onclick="buyNow('Coco Elegance')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Good Girl Noir</h3><p>Carolina Herrera</p><div class="price">₱299</div><button onclick="buyNow('Good Girl Noir')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Lacoste Black</h3><p>Masculine Fresh</p><div class="price">₱299</div><button onclick="buyNow('Lacoste Black')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Lacoste White</h3><p>Clean Fresh</p><div class="price">₱299</div><button onclick="buyNow('Lacoste White')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Lacoste Red</h3><p>Energetic</p><div class="price">₱299</div><button onclick="buyNow('Lacoste Red')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Dylan Purple</h3><p>Versace</p><div class="price">₱299</div><button onclick="buyNow('Dylan Purple')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Pear Essence</h3><p>Jo Malone</p><div class="price">₱299</div><button onclick="buyNow('Pear Essence')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Polo Sport</h3><p>Ralph Lauren</p><div class="price">₱299</div><button onclick="buyNow('Polo Sport')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Eros Flame</h3><p>Versace Eros</p><div class="price">₱299</div><button onclick="buyNow('Eros Flame')">Buy</button></div>
-
-<div class="card"><img src="bottle.jpg"><h3>Amethyste Glow</h3><p>Bvlgari</p><div class="price">₱299</div><button onclick="buyNow('Amethyste Glow')">Buy</button></div>
+<!-- (16 PRODUCTS) -->
+<div class="card"><img src="bottle.jpg"><h3>Happy Bloom</h3><button onclick="add('Happy Bloom')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Libre Muse</h3><button onclick="add('Libre Muse')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Valaya Essence</h3><button onclick="add('Valaya Essence')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Cloud Touch</h3><button onclick="add('Cloud Touch')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Meow Bliss</h3><button onclick="add('Meow Bliss')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Rouge Aura</h3><button onclick="add('Rouge Aura')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Coco Elegance</h3><button onclick="add('Coco Elegance')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Good Girl Noir</h3><button onclick="add('Good Girl Noir')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Lacoste Black</h3><button onclick="add('Lacoste Black')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Lacoste White</h3><button onclick="add('Lacoste White')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Lacoste Red</h3><button onclick="add('Lacoste Red')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Dylan Purple</h3><button onclick="add('Dylan Purple')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Pear Essence</h3><button onclick="add('Pear Essence')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Polo Sport</h3><button onclick="add('Polo Sport')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Eros Flame</h3><button onclick="add('Eros Flame')">Add to Cart</button></div>
+<div class="card"><img src="bottle.jpg"><h3>Amethyste Glow</h3><button onclick="add('Amethyste Glow')">Add to Cart</button></div>
 
 </div>
 </div>
@@ -258,35 +259,47 @@ z-index:999;
 <!-- CART -->
 <div class="cart" id="cart">
 <h3>Your Cart</h3>
-<div id="cartItems"></div>
+<div id="items"></div>
+<h4>Total: ₱<span id="total">0</span></h4>
+<button onclick="checkout()">Checkout</button>
 </div>
 
 <!-- CHAT -->
 <div id="chatButton" onclick="toggleChat()">💬 Chat Me</div>
 
 <div id="chatBox">
-<h3>Anmiera Support</h3>
-<button onclick="buyNow('I want to order')">🧴 Order Now</button>
-<button onclick="window.open('https://www.facebook.com/anmieraperfume/')">📘 Facebook</button>
+<button onclick="window.open('https://wa.me/639952525228')">WhatsApp</button>
+<button onclick="window.open('https://www.facebook.com/anmieraperfume/')">Facebook</button>
 </div>
 
 <!-- FOOTER -->
-<div class="footer">
-© 2026 Anmiera Perfume
-</div>
+<div class="footer">© 2026 Anmiera Perfume</div>
 
 <script>
 
 let cart = [];
+let price = 299;
 
-function buyNow(product){
-cart.push(product);
+function add(name){
+cart.push(name);
 document.getElementById("count").innerText = cart.length;
+update();
+}
 
-let phone = "639952525228";
-let msg = `Hi! I want to order:\n${product}\n₱299`;
+function update(){
+let items = document.getElementById("items");
+items.innerHTML = "";
+cart.forEach((c,i)=>{
+items.innerHTML += `<p>${i+1}. ${c} - ₱${price}</p>`;
+});
+document.getElementById("total").innerText = cart.length * price;
+}
 
-window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+function checkout(){
+let msg = "Order:\n";
+cart.forEach(c=>msg += c + "\n");
+msg += "Total: ₱"+cart.length*price;
+window.open("https://wa.me/639952525228?text="+encodeURIComponent(msg));
 }
 
 function toggleCart(){
@@ -300,8 +313,7 @@ box.style.display = box.style.display === "block" ? "none" : "block";
 
 /* SLIDER */
 let slides = document.querySelectorAll(".slide");
-let i = 0;
-
+let i=0;
 setInterval(()=>{
 slides.forEach(s=>s.classList.remove("active"));
 slides[i].classList.add("active");
