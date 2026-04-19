@@ -66,20 +66,26 @@ transition:0.3s;
 }
 
 .cart.open{right:0;}
+
+.footer{
+text-align:center;
+padding:25px;
+border-top:1px solid #222;
+color:#777;
+}
 </style>
 
 </head>
 
 <body>
 
-<!-- NAV -->
 <div class="nav">
     <a href="index.html"><img src="logo.png"></a>
 
     <div>
         <a href="about.html">About</a>
         <a href="products.html">Products</a>
-        <a href="javascript:void(0)" onclick="toggleCart()">Cart 🛒</a>
+        <a href="javascript:void(0)" onclick="toggleCart()">Cart</a>
         <a href="https://www.facebook.com/anmieraperfume/" target="_blank">Facebook</a>
     </div>
 </div>
@@ -89,22 +95,27 @@ transition:0.3s;
 
 <div class="products">
 
-<div class="card"><img src="bottle.jpg"><h3>Happy Bloom</h3><button onclick="add('Happy Bloom')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Libre Muse</h3><button onclick="add('Libre Muse')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Valaya Essence</h3><button onclick="add('Valaya Essence')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Cloud Touch</h3><button onclick="add('Cloud Touch')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Meow Bliss</h3><button onclick="add('Meow Bliss')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Rouge Aura</h3><button onclick="add('Rouge Aura')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Coco Elegance</h3><button onclick="add('Coco Elegance')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Good Girl Noir</h3><button onclick="add('Good Girl Noir')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Lacoste Black</h3><button onclick="add('Lacoste Black')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Lacoste White</h3><button onclick="add('Lacoste White')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Lacoste Red</h3><button onclick="add('Lacoste Red')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Dylan Purple</h3><button onclick="add('Dylan Purple')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Pear Essence</h3><button onclick="add('Pear Essence')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Polo Sport</h3><button onclick="add('Polo Sport')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Eros Flame</h3><button onclick="add('Eros Flame')">Add to Cart</button></div>
-<div class="card"><img src="bottle.jpg"><h3>Amethyste Glow</h3><button onclick="add('Amethyste Glow')">Add to Cart</button></div>
+<script>
+
+let items=[
+"Happy Bloom","Libre Muse","Valaya Essence","Cloud Touch",
+"Meow Bliss","Rouge Aura","Coco Elegance","Good Girl Noir",
+"Lacoste Black","Lacoste White","Lacoste Red","Dylan Purple",
+"Pear Essence","Polo Sport","Eros Flame","Amethyste Glow"
+];
+
+document.write(
+items.map(i=>`
+<div class="card">
+<img src="bottle.jpg">
+<h3>${i}</h3>
+<button onclick="add('${i}')">Add</button>
+<button onclick="removeItem('${i}')">Remove</button>
+</div>
+`).join("")
+);
+
+</script>
 
 </div>
 
@@ -112,27 +123,64 @@ transition:0.3s;
 <div class="cart" id="cart">
 <h3>Your Cart</h3>
 <div id="items"></div>
+<h4>Total: ₱<span id="total">0</span></h4>
+<button onclick="checkout()">Checkout</button>
 </div>
+
+<div class="footer">© 2026 Anmiera Perfume</div>
 
 <script>
 
-let cart=[];
+let cart={};
+let price=299;
 
 function add(name){
-cart.push(name);
+cart[name]=(cart[name]||0)+1;
+update();
+}
+
+function removeItem(name){
+if(cart[name]){
+cart[name]--;
+if(cart[name]<=0) delete cart[name];
+}
 update();
 }
 
 function update(){
 let items=document.getElementById("items");
 items.innerHTML="";
-cart.forEach((c,i)=>{
-items.innerHTML+=`<p>${i+1}. ${c}</p>`;
-});
+let total=0;
+
+for(let n in cart){
+let t=cart[n]*price;
+total+=t;
+
+items.innerHTML+=`
+<p>
+${n} x${cart[n]} = ₱${t}
+</p>`;
+}
+
+document.getElementById("total").innerText=total;
 }
 
 function toggleCart(){
 document.getElementById("cart").classList.toggle("open");
+}
+
+function checkout(){
+let msg="Order:\n";
+let total=0;
+
+for(let n in cart){
+msg+=`${n} x${cart[n]}\n`;
+total+=cart[n]*price;
+}
+
+msg+="Total ₱"+total;
+
+window.open("https://wa.me/639952525228?text="+encodeURIComponent(msg));
 }
 
 </script>
