@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Products</title>
+<title>Products - Anmiera</title>
 
 <style>
-body{margin:0;background:#0a0a0a;color:#fff;font-family:Arial;}
 
+body{
+margin:0;
+background:#0a0a0a;
+color:#fff;
+font-family:Arial;
+}
+
+/* NAV */
 .nav{
 display:flex;
 justify-content:space-between;
@@ -22,8 +29,10 @@ text-decoration:none;
 margin-left:10px;
 border:1px solid gold;
 padding:6px 10px;
+font-size:14px;
 }
 
+/* PRODUCTS */
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -53,39 +62,77 @@ cursor:pointer;
 margin-top:5px;
 }
 
-/* CART */
+/* CART OVERLAY */
+.cart-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:none;
+z-index:5;
+}
+
+/* CART PANEL */
 .cart{
 position:fixed;
-right:-320px;
+right:-340px;
 top:0;
-width:300px;
+width:320px;
 height:100%;
 background:#111;
 padding:20px;
 transition:0.3s;
+z-index:10;
+overflow-y:auto;
 }
 
-.cart.open{right:0;}
+.cart.open{
+right:0;
+}
+
+.cart-overlay.show{
+display:block;
+}
+
+.cart-item{
+border-bottom:1px solid #222;
+padding:10px 0;
+}
+
+.qty-btn{
+background:none;
+border:1px solid gold;
+color:gold;
+padding:3px 8px;
+margin:2px;
+cursor:pointer;
+width:auto;
+}
 
 .footer{
 text-align:center;
 padding:25px;
 border-top:1px solid #222;
 color:#777;
+margin-top:30px;
 }
+
 </style>
 
 </head>
 
 <body>
 
+<!-- NAV -->
 <div class="nav">
     <a href="index.html"><img src="logo.png"></a>
 
     <div>
         <a href="about.html">About</a>
         <a href="products.html">Products</a>
-        <a href="javascript:void(0)" onclick="toggleCart()">Cart</a>
+        <a href="javascript:void(0)" onclick="toggleCart()">Cart 🛒</a>
         <a href="https://www.facebook.com/anmieraperfume/" target="_blank">Facebook</a>
     </div>
 </div>
@@ -93,6 +140,7 @@ color:#777;
 <h2 style="text-align:center;">Available Scents</h2>
 <p style="text-align:center;">₱299 | 50mL</p>
 
+<!-- PRODUCTS -->
 <div class="products">
 
 <script>
@@ -109,8 +157,7 @@ items.map(i=>`
 <div class="card">
 <img src="bottle.jpg">
 <h3>${i}</h3>
-<button onclick="add('${i}')">Add</button>
-<button onclick="removeItem('${i}')">Remove</button>
+<button onclick="add('${i}')">Add to Cart</button>
 </div>
 `).join("")
 );
@@ -119,68 +166,121 @@ items.map(i=>`
 
 </div>
 
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="overlay" onclick="closeCart()"></div>
+
 <!-- CART -->
-<div class="cart" id="cart">
+<div class="cart" id="cart" onclick="event.stopPropagation()">
+
 <h3>Your Cart</h3>
+
 <div id="items"></div>
+
 <h4>Total: ₱<span id="total">0</span></h4>
+
 <button onclick="checkout()">Checkout</button>
+
 </div>
 
+<!-- FOOTER -->
 <div class="footer">© 2026 Anmiera Perfume</div>
 
+<!-- SCRIPT -->
 <script>
 
-let cart={};
-let price=299;
+let cart = {};
+let price = 299;
 
+/* ADD ITEM */
 function add(name){
-cart[name]=(cart[name]||0)+1;
+cart[name] = (cart[name] || 0) + 1;
+update();
+openCart();
+}
+
+/* INCREASE */
+function increase(name){
+cart[name]++;
 update();
 }
 
-function removeItem(name){
-if(cart[name]){
+/* DECREASE */
+function decrease(name){
 cart[name]--;
-if(cart[name]<=0) delete cart[name];
-}
+if(cart[name] <= 0) delete cart[name];
 update();
 }
 
+/* UPDATE CART */
 function update(){
-let items=document.getElementById("items");
-items.innerHTML="";
-let total=0;
 
-for(let n in cart){
-let t=cart[n]*price;
-total+=t;
+let itemsDiv = document.getElementById("items");
+itemsDiv.innerHTML = "";
 
-items.innerHTML+=`
-<p>
-${n} x${cart[n]} = ₱${t}
-</p>`;
+let total = 0;
+
+for(let name in cart){
+
+let qty = cart[name];
+let subtotal = qty * price;
+total += subtotal;
+
+itemsDiv.innerHTML += `
+<div class="cart-item">
+<strong>${name}</strong><br>
+
+Qty: ${qty}<br>
+₱${subtotal}<br>
+
+<button class="qty-btn" onclick="increase('${name}')">+</button>
+<button class="qty-btn" onclick="decrease('${name}')">-</button>
+</div>
+`;
 }
 
-document.getElementById("total").innerText=total;
+document.getElementById("total").innerText = total;
+
 }
 
+/* CART OPEN */
+function openCart(){
+document.getElementById("cart").classList.add("open");
+document.getElementById("overlay").classList.add("show");
+}
+
+/* CART CLOSE */
+function closeCart(){
+document.getElementById("cart").classList.remove("open");
+document.getElementById("overlay").classList.remove("show");
+}
+
+/* TOGGLE CART */
 function toggleCart(){
-document.getElementById("cart").classList.toggle("open");
+let c = document.getElementById("cart");
+if(c.classList.contains("open")){
+closeCart();
+}else{
+openCart();
+}
 }
 
+/* CHECKOUT */
 function checkout(){
-let msg="Order:\n";
-let total=0;
 
-for(let n in cart){
-msg+=`${n} x${cart[n]}\n`;
-total+=cart[n]*price;
+let msg = "Order:\n\n";
+let total = 0;
+
+for(let name in cart){
+msg += `${name} x${cart[name]} = ₱${cart[name]*price}\n`;
+total += cart[name]*price;
 }
 
-msg+="Total ₱"+total;
+msg += "\nTotal: ₱" + total;
 
-window.open("https://wa.me/639952525228?text="+encodeURIComponent(msg));
+window.open(
+"https://wa.me/639952525228?text=" + encodeURIComponent(msg)
+);
+
 }
 
 </script>
