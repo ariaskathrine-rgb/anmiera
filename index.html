@@ -24,19 +24,40 @@ border:1px solid gold;
 padding:6px 10px;
 }
 
-/* HERO */
+/* SLIDER */
 .hero{
+position:relative;
+width:100%;
 height:55vh;
-background:url('hero.jpg') center/cover;
+overflow:hidden;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+transition:1s;
+}
+
+.slide.active{opacity:1;}
+
+.overlay{
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
 display:flex;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 text-align:center;
 }
 
-.overlay{
-background:rgba(0,0,0,0.6);
-padding:20px;
+.overlay h1{
+font-size:32px;
 }
 
 button{
@@ -52,26 +73,43 @@ cursor:pointer;
 
 <body>
 
-<!-- NAV (ALL PAGES SAME) -->
+<!-- NAV (ALL PAGES SAME STYLE) -->
 <div class="nav">
     <a href="index.html"><img src="logo.png"></a>
 
     <div>
         <a href="about.html">About</a>
         <a href="products.html">Products</a>
-        <a href="products.html#cart">Cart</a>
         <a href="https://www.facebook.com/anmieraperfume/" target="_blank">Facebook</a>
     </div>
 </div>
 
-<!-- HERO -->
+<!-- HERO SLIDER -->
 <div class="hero">
-    <div class="overlay">
-        <h1>ANMIERA PERFUME</h1>
-        <p>Luxury Inspired Fragrance</p>
-        <a href="products.html"><button>Shop Now</button></a>
+
+    <div class="slide active" style="background-image:url('hero.jpg')">
+        <div class="overlay">
+            <h1>ANMIERA PERFUME</h1>
+            <p>Luxury Inspired Fragrance</p>
+            <a href="products.html"><button>Shop Now</button></a>
+        </div>
     </div>
+
+    <div class="slide" style="background-image:url('lifestyle.jpg')"></div>
+    <div class="slide" style="background-image:url('promo.jpg')"></div>
+
 </div>
+
+<script>
+let slides=document.querySelectorAll(".slide");
+let i=0;
+
+setInterval(()=>{
+slides.forEach(s=>s.classList.remove("active"));
+slides[i].classList.add("active");
+i=(i+1)%slides.length;
+},4000);
+</script>
 
 </body>
 </html>
